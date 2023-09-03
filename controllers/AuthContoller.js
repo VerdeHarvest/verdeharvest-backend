@@ -76,7 +76,7 @@ export default class AuthController {
   });
 
   static logout = asyncHandler(async (req, res, next) => {
-    const token = extractToken(req);
+    const token = await extractToken();
 
     if (!token) {
       const error = new NotFoundError('Token not found');
