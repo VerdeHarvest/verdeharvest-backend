@@ -3,9 +3,11 @@ import User from '../models/UserModel.js';
 import hashPassword from '../utils/hashPassword.js';
 import comparePassword from '../utils/comparePassword.js';
 import signToken from '../utils/signToken.js';
+import extractToken from '../utils/extractToken.js';
 import ConflictError from '../errors/conflictError.js';
 import ClientError from '../errors/clientError.js';
 import UnauthorizedError from '../errors/unauthorizedError.js';
+import NotFoundError from '../errors/notFoundError.js';
 // import logger from '../utils/logger.js';
 
 export default class AuthController {
@@ -72,4 +74,18 @@ export default class AuthController {
       }
     });
   });
+
+  static logout = asyncHandler(async (req, res, next) => {
+    const token = extractToken(req);
+
+    if (!token) {
+      const error = new NotFoundError('Token not found');
+      return next(error);
+    }
+
+    return res.status(200).json({
+      status: 'success',
+      message: 'User logged out successfully',
+    });
+  })
 }
