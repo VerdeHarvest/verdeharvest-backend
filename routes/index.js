@@ -15,6 +15,8 @@ router.post('/auth/signup', AuthController.signup);
 
 router.post('/auth/login', AuthController.logIn);
 
+router.post('/auth/logout', AuthController.logout);
+
 
 // users controller
 router.get('/users', UsersController.getAllUsers);
